@@ -9,20 +9,22 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var animationAmount = 1.0
+    @State private var enabled = false
     
     var body: some View {
         Button("Tap Me") {
-            animationAmount += 0.25
+            enabled.toggle()
             
         }
-        .padding(50)
-        .background(.red)
+        .frame(width: 200, height: 200)
+        .background(enabled ? .blue : .red)
+        //.animation(.default, value: enabled)
+        .animation(nil, value: enabled)
         .foregroundColor(.white)
-        .clipShape(Circle())
-        .scaleEffect(animationAmount)
-        .blur(radius: (animationAmount - 1) * 3 )
-        .animation(.default, value: animationAmount)
+        .clipShape(RoundedRectangle(cornerRadius: enabled ? 60 : 0))
+        //.animation(.default, value: enabled)
+        .animation(.interpolatingSpring(stiffness: 10, damping: 1), value: enabled)
+        
     }
 }
 

@@ -9,20 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var animationAmount = 1.0
+    @State private var isShowingRed = false
     
     var body: some View {
-        Button("Tap Me") {
-            animationAmount += 0.25
+        VStack {
+            Button("Tap Me") {
+                withAnimation {
+                    isShowingRed.toggle()
+                }
+            }
             
+            if isShowingRed {
+                Rectangle()
+                    .fill(.red)
+                .frame(width: 200, height: 200)
+                //.transition(.scale)
+                .transition(.asymmetric(insertion: .scale, removal: .opacity))
+            }
         }
-        .padding(50)
-        .background(.red)
-        .foregroundColor(.white)
-        .clipShape(Circle())
-        .scaleEffect(animationAmount)
-        .blur(radius: (animationAmount - 1) * 3 )
-        .animation(.default, value: animationAmount)
     }
 }
 
